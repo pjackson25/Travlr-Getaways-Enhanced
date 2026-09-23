@@ -24,11 +24,42 @@ const validateTrip = (tripData) => {
 };
 
 // GET /api/trips
+// Supports searching, filtering, and sorting trip records
 const tripsList = async (req, res) => {
   try {
-    const trips = await Trip.find({});
+    const { search, resort, sort } = req.query;
 
-    return res.status(200).json(trips);
+    // Build the MongoDB query dynamically
+    const query = {};
+
+    // Search across trip name, resort, and description
+    if (search) {
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { resort: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Filter trips by resort
+    if (resort) {
+      query.resort = { $regex: resort, $options: 'i' };
+    }
+
+    // Create the database query
+    let tripQuery = Trip.find(query);
+
+    // Sort results using an approved field
+    const allowedSortFields = ['name', 'start', 'resort'];
+
+    if (sort && allowedSortFields.includes(sort)) {
+      tripQuery = tripQuery.sort({ [sort]: 1 });
+    }
+
+    const trips = await tripQuery;
+
+   return res.status(200).json(trips);
+
   } catch (err) {
     console.error('Error retrieving trips:', err);
 
