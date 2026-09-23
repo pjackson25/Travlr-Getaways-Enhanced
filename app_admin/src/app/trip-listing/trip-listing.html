@@ -1,0 +1,11 @@
+<h2>Travlr Trips</h2>
+<p>
+  <a routerLink="/add-trip" class="btn btn-primary">
+    Add Trip
+  </a>
+</p>
+@for (trip of trips; track trip.code) {
+
+  <app-trip-card [trip]="trip"></app-trip-card>
+
+}
