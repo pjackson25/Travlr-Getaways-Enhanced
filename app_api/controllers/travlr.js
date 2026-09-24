@@ -27,7 +27,7 @@ const validateTrip = (tripData) => {
 // Supports searching, filtering, and sorting trip records
 const tripsList = async (req, res) => {
   try {
-    const { search, resort, sort } = req.query;
+    const { search, resort, sort, page = 1, limit = 10 } = req.query;
 
     // Build the MongoDB query dynamically
     const query = {};
@@ -46,9 +46,15 @@ const tripsList = async (req, res) => {
       query.resort = { $regex: resort, $options: 'i' };
     }
 
-    // Create the database query
-    let tripQuery = Trip.find(query);
+    // Convert pagination values to numbers and calculate records to skip
+    const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
+    const limitNumber = Math.min(Math.max(parseInt(limit, 10) || 10, 1), 50);
+    const skip = (pageNumber - 1) * limitNumber;
 
+    // Create the database query
+    let tripQuery = Trip.find(query)
+      .skip(skip)
+      .limit(limitNumber);
     // Sort results using an approved field
     const allowedSortFields = ['name', 'start', 'resort'];
 
