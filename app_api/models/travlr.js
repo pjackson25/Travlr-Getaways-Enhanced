@@ -5,6 +5,7 @@ const tripSchema = new mongoose.Schema({
   code: {
     type: String,
     required: true,
+    unique: true,
     index: true
   },
   name: {
