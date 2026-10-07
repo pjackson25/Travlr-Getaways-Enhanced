@@ -22,10 +22,16 @@ const tripSchema = new mongoose.Schema({
     required: true
   },
   resort: {
+<<<<<<< HEAD
   type: String,
   required: true,
   index: true
 },
+=======
+    type: String,
+    required: true
+  },
+>>>>>>> origin/main
   perPerson: {
     type: String,
     required: true

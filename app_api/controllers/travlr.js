@@ -1,10 +1,13 @@
 const Trip = require('../models/travlr');
 
+<<<<<<< HEAD
 // Escape special regex characters in user-provided search values
 const escapeRegex = (value) => {
   return value.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
 };
 
+=======
+>>>>>>> origin/main
 // Validate required trip fields before processing the request
 const validateTrip = (tripData) => {
   const requiredFields = [
@@ -39,6 +42,7 @@ const tripsList = async (req, res) => {
 
     // Search across trip name, resort, and description
     if (search) {
+<<<<<<< HEAD
   const safeSearch = escapeRegex(search);
 
   query.$or = [
@@ -53,6 +57,19 @@ const tripsList = async (req, res) => {
   const safeResort = escapeRegex(resort);
   query.resort = { $regex: safeResort, $options: 'i' };
 }
+=======
+      query.$or = [
+        { name: { $regex: search, $options: 'i' } },
+        { resort: { $regex: search, $options: 'i' } },
+        { description: { $regex: search, $options: 'i' } }
+      ];
+    }
+
+    // Filter trips by resort
+    if (resort) {
+      query.resort = { $regex: resort, $options: 'i' };
+    }
+>>>>>>> origin/main
 
     // Convert pagination values to numbers and calculate records to skip
     const pageNumber = Math.max(parseInt(page, 10) || 1, 1);
