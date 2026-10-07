@@ -1,0 +1,69 @@
+<h2>Edit Trip</h2>
+
+<form (ngSubmit)="updateTrip()">
+  <label>Code</label><br>
+  <input
+    type="text"
+    name="code"
+    [(ngModel)]="trip.code"
+    required
+  ><br><br>
+
+  <label>Name</label><br>
+  <input
+    type="text"
+    name="name"
+    [(ngModel)]="trip.name"
+    required
+  ><br><br>
+
+  <label>Length</label><br>
+  <input
+    type="text"
+    name="length"
+    [(ngModel)]="trip.length"
+    required
+  ><br><br>
+
+  <label>Start Date</label><br>
+  <input
+    type="date"
+    name="start"
+    [(ngModel)]="trip.start"
+    required
+  ><br><br>
+
+  <label>Resort</label><br>
+  <input
+    type="text"
+    name="resort"
+    [(ngModel)]="trip.resort"
+    required
+  ><br><br>
+
+  <label>Price Per Person</label><br>
+  <input
+    type="number"
+    name="perPerson"
+    [(ngModel)]="trip.perPerson"
+    required
+  ><br><br>
+
+  <label>Image</label><br>
+  <input
+    type="text"
+    name="image"
+    [(ngModel)]="trip.image"
+    required
+  ><br><br>
+
+  <label>Description</label><br>
+  <textarea
+    name="description"
+    [(ngModel)]="trip.description"
+    required
+  ></textarea><br><br>
+
+  <button type="submit">Update Trip</button>
+  <button type="button" (click)="cancel()">Cancel</button>
+</form>
